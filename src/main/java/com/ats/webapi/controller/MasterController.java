@@ -40,6 +40,7 @@ import com.ats.webapi.model.FrTargetList;
 import com.ats.webapi.model.FrTotalSale;
 import com.ats.webapi.model.FranchiseSup;
 import com.ats.webapi.model.FranchiseSupList;
+import com.ats.webapi.model.FranchiseeSalesDetails;
 import com.ats.webapi.model.FranchiseeSalesTotal;
 import com.ats.webapi.model.GetFrMenuConfigure;
 import com.ats.webapi.model.GetItemSup;
@@ -74,6 +75,7 @@ import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FrMenuConfigureRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
+import com.ats.webapi.repository.FranchiseeSalesDetailsRepo;
 import com.ats.webapi.repository.GetFrMenuConfigureRepository;
 import com.ats.webapi.repository.GetSpCakeSupRepository;
 import com.ats.webapi.repository.ItemForMOrderRepository;
@@ -1489,6 +1491,22 @@ public class MasterController {
 		return frSale;
 
 	}
+	/*************************************************************************************/
+	//16-01-2020
+	@Autowired FranchiseeSalesDetailsRepo frSalesDetailRepo;
+	@RequestMapping(value = "/getItemSalesByFrId", method = RequestMethod.POST)
+	public @ResponseBody List<FranchiseeSalesDetails> getItemSalesByFrId(@RequestParam("frId") int  frId, @RequestParam("fromDate") String  fromDate,
+			@RequestParam("toDate") String  toDate) {
 
-				
+		List<FranchiseeSalesDetails> frSale=new ArrayList<FranchiseeSalesDetails>();
+		try {
+			frSale = frSalesDetailRepo.getFrItemSalesDetails(frId, fromDate, toDate);
+		}
+		catch (Exception e) {			
+			e.printStackTrace();
+
+		}
+		return frSale;
+
+	}
 }
